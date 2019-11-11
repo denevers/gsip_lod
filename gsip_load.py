@@ -30,7 +30,8 @@ from .resources import *
 
 # Import the code for the DockWidget
 from .gsip_load_dockwidget import GsipLodDockWidget
-from .forms import DatasetForm
+from .forms import DatasetForm,InformationForm
+from .selfie import getMir,Selfie
 import os.path
 
 
@@ -224,8 +225,11 @@ class GsipLod:
     
     def ac_identified(self,feature):
         nir =feature.attribute("uri")
+        self.dockwidget.lblAction.setText("")
         if nir is not None:
-            self.dockwidget.lblAction.setText(nir)
+            s = getMir(nir)
+            f = InformationForm(s)
+            f.exec_()
 
 
     def unload(self):
