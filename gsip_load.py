@@ -24,6 +24,7 @@
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
+from qgis.gui import QgsMapToolIdentifyFeature
 # Initialize Qt resources from file resources.py
 from .resources import *
 
@@ -207,16 +208,25 @@ class GsipLod:
         self.dockwidget.lblAction.setText("Dataset")
         f = DatasetForm()
         f.exec_()
-        pass
+
     
     def ac_inspect(self):
-        ''' identify button is clicked'''
+        ''' identify button is clicked, set the tool'''
         self.dockwidget.lblAction.setText("Select a linked feature")
-        pass
+        mc=self.iface.mapCanvas()
+        lyr=self.iface.activeLayer()
+        if lyr is not None:
+            self.mapTool = QgsMapToolIdentifyFeature(mc,lyr)
+            mc.setMapTool(self.mapTool)
+            self.mapTool.featureIdentified.connect(self.ac_identified)
+        
+
     
     def ac_identified(self,feature):
-        ''' a feature has been clicked on the map'''
-        pass
+        nir =feature.attribute("uri")
+        if nir is not None:
+            self.dockwidget.lblAction.setText(nir)
+
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
