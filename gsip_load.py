@@ -29,6 +29,7 @@ from .resources import *
 
 # Import the code for the DockWidget
 from .gsip_load_dockwidget import GsipLodDockWidget
+from .forms import DatasetForm
 import os.path
 
 
@@ -200,6 +201,23 @@ class GsipLod:
         self.pluginIsActive = False
 
 
+
+    def ac_dataset(self):
+        ''' dataset button is clicked'''
+        self.dockwidget.lblAction.setText("Dataset")
+        f = DatasetForm()
+        f.exec_()
+        pass
+    
+    def ac_inspect(self):
+        ''' identify button is clicked'''
+        self.dockwidget.lblAction.setText("Select a linked feature")
+        pass
+    
+    def ac_identified(self,feature):
+        ''' a feature has been clicked on the map'''
+        pass
+
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
 
@@ -229,6 +247,7 @@ class GsipLod:
             if self.dockwidget == None:
                 # Create the dockwidget (after translation) and keep reference
                 self.dockwidget = GsipLodDockWidget()
+                self.bindButtons(self.dockwidget)
 
             # connect to provide cleanup on closing of dockwidget
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
@@ -237,3 +256,8 @@ class GsipLod:
             # TODO: fix to allow choice of dock location
             self.iface.addDockWidget(Qt.TopDockWidgetArea, self.dockwidget)
             self.dockwidget.show()
+            
+    def bindButtons(self,widget):
+        ''' link the buttons on the widget to actions in this class'''
+        widget.btnDataset.clicked.connect(self.ac_dataset)
+        widget.btnInspect.clicked.connect(self.ac_inspect)
