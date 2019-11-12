@@ -35,7 +35,7 @@ class InformationForm(QtWidgets.QDialog,FORM_CLASS_INF):
         
     def _setup(self):
         self.btnNir.clicked.connect(self.clickNir)
-        self.btnNir.setText(self.context_resource)
+        self.btnNir.setText(self.selfie.context_resource)
         self.lvRepresentations.setModel(self.selfie.representationModel())
         
     def clickNir(self):

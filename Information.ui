@@ -38,7 +38,7 @@ color: rgb(85, 0, 255);</string>
      <item>
       <widget class="QListView" name="lvRepresentations">
        <property name="viewMode">
-        <enum>QListView::IconMode</enum>
+        <enum>QListView::ListMode</enum>
        </property>
       </widget>
      </item>
