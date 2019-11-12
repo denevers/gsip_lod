@@ -57,7 +57,7 @@ class Representation:
         return self.label
     
     
-class Links:
+class Link:
     def __init__(self,predicate,obj):
         self.predicate = predicate
         self.obj = obj
@@ -70,6 +70,10 @@ class Selfie:
         self.representations = []
         for obj in g.objects(context_uri,SCHEMAS_ORG['subjectOf']):
             self.representations.append(Representation(g,obj))
+        self.links = []
+        for pred,obj in g.predicate_objects(self.context_resource):
+            if pred.toPython().startswith("http://geosciences.ca"):
+                self.links.append(Link(pred,obj))
         
         
     def representationModel(self):
@@ -78,7 +82,7 @@ class Selfie:
     
     def linkModel(self):
         ''' return a table model for links '''
-        pass
+        return LinkModel(self)
         
 class RepresentationModel(QAbstractListModel):
     def __init__(self, s, parent=None,*args):
@@ -94,5 +98,33 @@ class RepresentationModel(QAbstractListModel):
             return QVariant(self.selfie.representations[index.row()].label)
         else: 
             return QVariant()
+        
+class LinkModel(QAbstractTableModel):
+    def __init__(self, s, parent=None, *args):
+        QAbstractTableModel.__init__(self, parent, *args)
+        self.selfie = s
+        self.headerdata = ['link','resource']
+        
+    def rowCount(self,_):
+        return len(self.selfie.links)
+    
+    def columnCount(self,_):
+        return 2
+    
+    def data(self, index, role):
+        if not index.isValid():
+            return QVariant()
+        elif role != Qt.DisplayRole:
+            return QVariant()
+        l = self.selfie.links[index.row()]
+        if index.column() == 0:
+            return l.predicate.toPython()
+        else:
+            return l.obj.toPython()
+        
+    def headerData(self, col, orientation, role):
+        if orientation == Qt.Horizontal and role == Qt.DisplayRole:
+            return QVariant(self.headerdata[col])
+        return QVariant()
         
         

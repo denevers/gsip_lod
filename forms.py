@@ -37,10 +37,11 @@ class InformationForm(QtWidgets.QDialog,FORM_CLASS_INF):
         self.btnNir.clicked.connect(self.clickNir)
         self.btnNir.setText(self.selfie.context_resource)
         self.lvRepresentations.setModel(self.selfie.representationModel())
+        self.tvLinks.setModel(self.selfie.linkModel())
         
     def clickNir(self):
-        if self.uri is not None:
-            webbrowser.open(self.uri, new = 2)
+        if self.selfie.context_resource is not None:
+            webbrowser.open(self.selfie.context_resource, new = 2)
 
     def closeEvent(self, event):
         self.closingPlugin.emit()
