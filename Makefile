@@ -38,15 +38,15 @@ LOCALES =
 # translation
 SOURCES = \
 	__init__.py \
-	gsip_load.py gsip_load_dockwidget.py
+	gsip_lod.py gsip_lod_dockwidget.py
 
-PLUGINNAME = gsip_load
+PLUGINNAME = gsip_lod
 
 PY_FILES = \
 	__init__.py \
-	gsip_load.py gsip_load_dockwidget.py
+	gsip_lod.py gsip_lod_dockwidget.py
 
-UI_FILES = gsip_load_dockwidget_base.ui
+UI_FILES = gsip_lod_dockwidget_base.ui
 
 EXTRAS = metadata.txt icon.png
 
@@ -73,7 +73,7 @@ QGISDIR=C:\Users\Laptop\AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugi
 
 HELP = help/build/html
 
-PLUGIN_UPLOAD = $(c)/plugin_upload.py
+PLUGIN_UPLOAD = $(c)/plugin_uplod.py
 
 RESOURCE_SRC=$(shell grep '^ *<file' resources.qrc | sed 's@</file>@@g;s/.*>//g' | tr '\n' ' ')
 

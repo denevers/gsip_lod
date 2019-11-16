@@ -28,7 +28,7 @@ from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtCore import pyqtSignal
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'gsip_load_dockwidget_base.ui'))
+    os.path.dirname(__file__), 'gsip_lod_dockwidget_base.ui'))
 
 
 class GsipLodDockWidget(QtWidgets.QDockWidget, FORM_CLASS):

@@ -32,5 +32,5 @@ def classFactory(iface):  # pylint: disable=invalid-name
     :type iface: QgsInterface
     """
     #
-    from .gsip_load import GsipLod
+    from .gsip_lod import GsipLod
     return GsipLod(iface)

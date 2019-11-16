@@ -29,7 +29,7 @@ from qgis.gui import QgsMapToolIdentifyFeature
 from .resources import *
 
 # Import the code for the DockWidget
-from .gsip_load_dockwidget import GsipLodDockWidget
+from .gsip_lod_dockwidget import GsipLodDockWidget
 from .forms import DatasetForm,InformationForm
 from .selfie import getMir,Selfie
 import os.path
@@ -181,7 +181,7 @@ class GsipLod:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        icon_path = ':/plugins/gsip_load/icon.png'
+        icon_path = ':/plugins/gsip_lod/icon.png'
         self.add_action(
             icon_path,
             text=self.tr(u'GSIP'),

@@ -16,7 +16,7 @@ import unittest
 
 from qgis.PyQt.QtGui import QDockWidget
 
-from gsip_load_dockwidget import GsipLodDockWidget
+from gsip_lod_dockwidget import GsipLodDockWidget
 
 from utilities import get_qgis_app
 
