@@ -7,7 +7,7 @@ This is essentially the same application than the web version, but running in QG
 ## important notes
 
 
-rdflib is not available in QGIS, so it must be installed in QGIS own python3 environment.
+rdflib is not available in QGIS, so it must be installed. For Windows (?), it means it must be installed in QGIS own python3 environment.
 
 For linux, just make sure you install with pip3 (my default setup on my environment was installing python 2.7).
 
