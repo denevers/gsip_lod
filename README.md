@@ -37,6 +37,8 @@ Now, you're not totally off the hook.  There is a bug (?) in rdflib that does no
 
 `AttributeError: 'NoneType' object has no attribute 'isatty' `
 
+This seems to be a problem on Windows only.
+
 you must fix this by editing the RDFlib  __init__.py file
 
 on my installation, it's located :
