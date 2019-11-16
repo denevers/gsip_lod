@@ -33,6 +33,9 @@ from .gsip_load_dockwidget import GsipLodDockWidget
 from .forms import DatasetForm,InformationForm
 from .selfie import getMir,Selfie
 import os.path
+import tempfile
+import urllib
+import uuid
 
 
 '''
@@ -40,6 +43,7 @@ code example to use
 https://gis.stackexchange.com/a/260214
 
 '''
+
 
 
 class GsipLod:
@@ -275,3 +279,22 @@ class GsipLod:
         ''' link the buttons on the widget to actions in this class'''
         widget.btnDataset.clicked.connect(self.ac_dataset)
         widget.btnInspect.clicked.connect(self.ac_inspect)
+        
+    def downloadSpatialResource(self,location,mime_type):
+        ''' download a spatial resource from the web and upload it on the map
+        location is the URL, ext is the format (extension)
+        TODO: For this demo, we assume spatia=geojson, so we just generate a 
+        temp name (a guid) an save it in /temp
+        '''
+        name = location.rsplit('/', 1)[-1]
+        filename = "f" + str(uuid.uuid1()) + ".geojson"
+        path = tempfile.gettempdir() + "/" + filename
+        
+        opener = urllib.request.build_opener()
+        opener.addheaders = [('Accept', 'application/vnd.geo+json"')]
+        urllib.request.install_opener(opener)
+        urllib.request.urlretrieve(location, path)
+        # load this file in QGIS
+        self.iface.addVectorLayer(path, name, "ogr") 
+        
+        
