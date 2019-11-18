@@ -213,6 +213,8 @@ class GsipLod:
         self.dockwidget.lblAction.setText("Dataset")
         f = DatasetForm()
         f.exec_()
+        if f.result():
+            self.downloadSpatialResource("https://geoconnex.ca/gsip/resources/catchment/catchments", "application/vnd.geo+json")
 
     
     def ac_inspect(self):
@@ -286,15 +288,13 @@ class GsipLod:
         TODO: For this demo, we assume spatia=geojson, so we just generate a 
         temp name (a guid) an save it in /temp
         '''
-        name = location.rsplit('/', 1)[-1]
-        filename = "f" + str(uuid.uuid1()) + ".geojson"
-        path = tempfile.gettempdir() + "/" + filename
-        
+        #name = location.rsplit('/', 1)[-1]
+        #filename = "f" + str(uuid.uuid1()) + ".geojson"
+        #path = tempfile.gettempdir() + "/" + filename
+        path = "/home/eric/geo/d.geojson"
         opener = urllib.request.build_opener()
-        opener.addheaders = [('Accept', 'application/vnd.geo+json"')]
+        opener.addheaders = [('Accept', mime_type)]
         urllib.request.install_opener(opener)
         urllib.request.urlretrieve(location, path)
         # load this file in QGIS
-        self.iface.addVectorLayer(path, name, "ogr") 
-        
-        
+        self.iface.addVectorLayer(path, "catchment", "ogr")
