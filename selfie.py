@@ -4,7 +4,7 @@ from rdflib import URIRef
 from qgis.PyQt.QtCore import QAbstractListModel, QAbstractTableModel, QVariant,Qt
 from rdflib import RDFS
 
-
+MIME_GEOJSON = "application/vnd.geo+json"
 
 SCHEMAS_ORG = rdflib.Namespace("http://schema.org/")
 DCTERMS = rdflib.Namespace("http://purl.org/dc/terms/")
@@ -61,6 +61,16 @@ class Link:
     def __init__(self,predicate,obj):
         self.predicate = predicate
         self.obj = obj
+    def assocLabel(self):
+        '''
+        get the last element of the uri
+        '''
+        return self.predicate.toPython().rsplit('/', 1)[-1]
+    def linkTarget(self):
+        '''
+        return whatever after /id/
+        '''
+        return self.obj.toPython().partition('/id/')[2] 
         
     
 class Selfie:
@@ -95,7 +105,11 @@ class RepresentationModel(QAbstractListModel):
     
     def data(self, index, role): 
         if index.isValid() and role == Qt.DisplayRole:
-            return QVariant(self.selfie.representations[index.row()].label)
+            r = self.selfie.representations[index.row()]
+            if r.hasFormat(MIME_GEOJSON):
+                return QVariant("*"+r.label)
+            else:
+                return QVariant(r.label)
         else: 
             return QVariant()
         
@@ -103,7 +117,7 @@ class LinkModel(QAbstractTableModel):
     def __init__(self, s, parent=None, *args):
         QAbstractTableModel.__init__(self, parent, *args)
         self.selfie = s
-        self.headerdata = ['link','resource']
+        self.headerdata = ['link', 'resource']
         
     def rowCount(self,_):
         return len(self.selfie.links)
@@ -118,9 +132,9 @@ class LinkModel(QAbstractTableModel):
             return QVariant()
         l = self.selfie.links[index.row()]
         if index.column() == 0:
-            return l.predicate.toPython()
+            return l.assocLabel()
         else:
-            return l.obj.toPython()
+            return l.linkTarget()
         
     def headerData(self, col, orientation, role):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:

@@ -97,4 +97,9 @@ class InformationForm(QtWidgets.QDialog,FORM_CLASS_INF):
         # check if it supports geojson
         if r.hasFormat(MIME_GEOJSON):
             self.gsipLod.downloadSpatialResource(r.url,MIME_GEOJSON)
+        else:
+            # lauch as a web page
+             webbrowser.open(self.selfie.context_resource, new = 2)
+
+
 
