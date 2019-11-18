@@ -4,6 +4,6 @@
 <https://geoconnex.ca/gsip/resources/catchment/catchments>  
 dct:format  "application/vnd.geo+json";
 rdfs:label "Natural Resources Canada - Watershed (geojson)".
-<https://cida-test.er.usgs.gov/gsip/resources/catchment/catchments> 
+<https://cida-test.er.usgs.gov/chyld-pilot/resources/catchment/catchments> 
 dct:format  "application/vnd.geo+json";
 rdfs:label "United States Geological Survey - Watershed (geojson)".
