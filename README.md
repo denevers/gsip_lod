@@ -2,6 +2,8 @@
 
 This is essentially the same application than the web version, but running in QGIS
 
+![](qgsip.png)
+
 ----
 
 ## important notes
