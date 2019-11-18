@@ -242,7 +242,7 @@ class GsipLod:
         self.dockwidget.lblAction.setText("")
         if nir is not None:
             s = getMir(nir)
-            f = InformationForm(s,self.iface)
+            f = InformationForm(s,self)
             f.exec_()
 
 
@@ -297,9 +297,9 @@ class GsipLod:
         temp name (a guid) an save it in /temp
         '''
         #name = location.rsplit('/', 1)[-1]
-        #filename = "f" + str(uuid.uuid1()) + ".geojson"
-        #path = tempfile.gettempdir() + "/" + filename
-        path = "/home/eric/geo/d.geojson"
+        filename = "f" + str(uuid.uuid1()) + ".geojson"
+        path = tempfile.gettempdir() + "/" + filename
+        #path = "/home/eric/geo/d.geojson"
         opener = urllib.request.build_opener()
         opener.addheaders = [('Accept', mime_type)]
         urllib.request.install_opener(opener)

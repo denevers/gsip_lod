@@ -34,7 +34,7 @@ class Representation:
         self.is_resource = False
         self.formats = []
         # TO DO , all the other properties
-        for predicate,obj in g.predicate_objects(rep_resource):
+        for predicate, obj in g.predicate_objects(rep_resource):
             # we are looking for a schema.url
             if predicate == SCHEMAS_ORG['url']:
                 self.url = obj.toPython()

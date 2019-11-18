@@ -20,6 +20,8 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT ?l ?u ?f WHERE {?u rdfs:label ?l;dct:format ?f}
 """
 
+MIME_GEOJSON = "application/vnd.geo+json"
+
 class DatasetForm(QtWidgets.QDialog, FORM_CLASS_DS):
 
     closingPlugin = pyqtSignal()
@@ -53,17 +55,18 @@ class DatasetForm(QtWidgets.QDialog, FORM_CLASS_DS):
 class InformationForm(QtWidgets.QDialog,FORM_CLASS_INF):
     closingPlugin = pyqtSignal()
 
-    def __init__(self,selfie,qgisIFace , parent=None):
+    def __init__(self,selfie,gsipLod, parent=None):
         """Constructor."""
         super(InformationForm, self).__init__(parent)
         self.selfie = selfie
-        self.iface = qgisIFace
+        self.gsipLod = gsipLod
         self.setupUi(self)
         self._setup()
         
     def _setup(self):
         self.btnNir.clicked.connect(self.clickNir)
         self.tvLinks.doubleClicked.connect(self._followLink)
+        self.lvRepresentations.doubleClicked.connect(self._loadRepresentation)
         self._setSelfie()
         
     def _setSelfie(self):
@@ -87,4 +90,11 @@ class InformationForm(QtWidgets.QDialog,FORM_CLASS_INF):
         # create a new selfie with the new URL
         self.selfie = getMir(str(link.obj))
         self._setSelfie()
+
+    def _loadRepresentation(self, index):
+        # get the selected representation
+        r = self.selfie.representations[index.row()]
+        # check if it supports geojson
+        if r.hasFormat(MIME_GEOJSON):
+            self.gsipLod.downloadSpatialResource(r.url,MIME_GEOJSON)
 
