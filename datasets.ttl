@@ -1,0 +1,9 @@
+# resource file containing initial datasets
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+<https://geoconnex.ca/gsip/resources/catchment/catchments>  
+dct:format  "application/vnd.geo+json";
+rdfs:label "Natural Resources Canada - Watershed (geojson)".
+<https://cida-test.er.usgs.gov/gsip/resources/catchment/catchments> 
+dct:format  "application/vnd.geo+json";
+rdfs:label "United States Geological Survey - Watershed (geojson)".

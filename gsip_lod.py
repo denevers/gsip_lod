@@ -36,6 +36,7 @@ import os.path
 import tempfile
 import urllib
 import uuid
+import rdflib
 
 
 '''
@@ -211,7 +212,12 @@ class GsipLod:
     def ac_dataset(self):
         ''' dataset button is clicked'''
         self.dockwidget.lblAction.setText("Dataset")
-        f = DatasetForm()
+        # load the Graph from the local folder
+        g=rdflib.Graph()
+        dataset_path = os.path.join(
+            self.plugin_dir, "datasets.ttl")
+        g.parse(dataset_path, format="ttl")
+        f = DatasetForm(g)
         f.exec_()
         if f.result():
             self.downloadSpatialResource("https://geoconnex.ca/gsip/resources/catchment/catchments", "application/vnd.geo+json")

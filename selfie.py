@@ -21,8 +21,8 @@ def getMir(sUri):
     response = urllib.request.urlopen(request)
     content_type = response.info()['Content-type']
     g=rdflib.Graph()
-    g.parse(data=response.read(),format=content_type)
-    return Selfie(g,URIRef(sUri))
+    g.parse(data=response.read(), format=content_type)
+    return Selfie(g, URIRef(sUri))
 
     
     
