@@ -1,7 +1,7 @@
 import urllib
 import rdflib
 from rdflib import URIRef
-from qgis.PyQt.QtCore import QAbstractListModel,QAbstractTableModel,QVariant,Qt
+from qgis.PyQt.QtCore import QAbstractListModel, QAbstractTableModel, QVariant,Qt
 from rdflib import RDFS
 
 
@@ -126,5 +126,6 @@ class LinkModel(QAbstractTableModel):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return QVariant(self.headerdata[col])
         return QVariant()
+        
         
         

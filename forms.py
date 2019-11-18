@@ -5,6 +5,8 @@ import rdflib
 from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtWidgets import QListWidgetItem
 from qgis.PyQt.QtCore import pyqtSignal, Qt
+from .selfie import Selfie, getMir
+from qgis.core import QgsMessageLog
 
 FORM_CLASS_DS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'dataset_form.ui'))
@@ -51,19 +53,24 @@ class DatasetForm(QtWidgets.QDialog, FORM_CLASS_DS):
 class InformationForm(QtWidgets.QDialog,FORM_CLASS_INF):
     closingPlugin = pyqtSignal()
 
-    def __init__(self,selfie, parent=None):
+    def __init__(self,selfie,qgisIFace , parent=None):
         """Constructor."""
         super(InformationForm, self).__init__(parent)
         self.selfie = selfie
+        self.iface = qgisIFace
         self.setupUi(self)
         self._setup()
         
     def _setup(self):
         self.btnNir.clicked.connect(self.clickNir)
+        self.tvLinks.doubleClicked.connect(self._followLink)
+        self._setSelfie()
+        
+    def _setSelfie(self):
         self.btnNir.setText(self.selfie.context_resource)
         self.lvRepresentations.setModel(self.selfie.representationModel())
         self.tvLinks.setModel(self.selfie.linkModel())
-        
+
     def clickNir(self):
         if self.selfie.context_resource is not None:
             webbrowser.open(self.selfie.context_resource, new = 2)
@@ -71,3 +78,13 @@ class InformationForm(QtWidgets.QDialog,FORM_CLASS_INF):
     def closeEvent(self, event):
         self.closingPlugin.emit()
         event.accept()
+
+    def _followLink(self,mi):
+        '''
+        an items double click, follow the link and reset the current form to this new resource
+        '''
+        link = self.selfie.links[mi.row()]
+        # create a new selfie with the new URL
+        self.selfie = getMir(str(link.obj))
+        self._setSelfie()
+

@@ -242,7 +242,7 @@ class GsipLod:
         self.dockwidget.lblAction.setText("")
         if nir is not None:
             s = getMir(nir)
-            f = InformationForm(s)
+            f = InformationForm(s,self.iface)
             f.exec_()
 
 
