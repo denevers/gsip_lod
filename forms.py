@@ -34,6 +34,16 @@ class DatasetForm(QtWidgets.QDialog, FORM_CLASS_DS):
             li.setData(Qt.UserRole,row)
             self.listWidget.addItem(li)
 
+    def getSelectedResource(self):
+        ci = self.listWidget.currentItem()
+        if ci is not None:
+            d = ci.data(Qt.UserRole)
+            return d['u'],d['f']
+        else:
+            return None,None
+
+
+
     def closeEvent(self, event):
         self.closingPlugin.emit()
         event.accept()

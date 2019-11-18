@@ -220,7 +220,9 @@ class GsipLod:
         f = DatasetForm(g)
         f.exec_()
         if f.result():
-            self.downloadSpatialResource("https://geoconnex.ca/gsip/resources/catchment/catchments", "application/vnd.geo+json")
+            url,format = f.getSelectedResource()
+            self.downloadSpatialResource(url,format)
+            #self.downloadSpatialResource("https://geoconnex.ca/gsip/resources/catchment/catchments", "application/vnd.geo+json")
 
     
     def ac_inspect(self):
