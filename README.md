@@ -1,6 +1,6 @@
 # GSIP QGIS demonstration
 
-This is essentially the same application than the web version, but running in QGIS
+This is essentially the same application than the web version, but running in QGIS.  Is superficially look like  BRGM's Application Schema toolbox (https://github.com/BRGM/gml_application_schema_toolbox), but is far less sophisticated.  The GSIP plugin only deals with landing pages and does not attempt to parse the linked representation themselves.  It will load a geojson in QGIS if this representation is available and that's it. BRGM plugin will actually parse the domain model (GML application) and navigate it.  One thing that could be done is to link the GSIP plugin with the app schema plugin (on the TODO list !)
 
 ![](qgsip.png)
 
