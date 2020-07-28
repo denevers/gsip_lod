@@ -82,10 +82,15 @@ class Selfie:
             self.representations.append(Representation(g,obj))
         self.links = []
         for pred,obj in g.predicate_objects(self.context_resource):
-            if pred.toPython().startswith("http://geosciences.ca"):
-                self.links.append(Link(pred,obj))
+            if pred.toPython().startswith("http://geosciences.ca") or pred.toPython().startswith("https://www.opengis.net/def/hy_features"):
+                if (obj.startswith("https://cida-test.er.usgs.gov/")):
+                    self.links.append(Link(pred,self.fixUsgs(obj)))
+                else:
+                    self.links.append(Link(pred,obj))
         
-        
+    def fixUsgs(self,u):
+        return URIRef(u.replace("https://cida-test.er.usgs.gov/","https://geoconnex.us/"))
+
     def representationModel(self):
         return RepresentationModel(self)
         pass
